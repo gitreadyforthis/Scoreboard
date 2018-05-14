@@ -33,7 +33,7 @@ public class ScoreboardClient implements Runnable {
         //Creates a server socket, bound to the specified port.
         //should connect to the localhost on port 4001
         this.master.output.println("User Name Selected");
-        //Username Declariation
+        //Username Declaration
         String userName = null;
         try {
             userName = this.master.input.readLine();
@@ -57,24 +57,22 @@ public class ScoreboardClient implements Runnable {
                     //I moved most of this code to Client since it is interactive while
                     //Server is not
                     case "help":
-                        this.master.output.println("Other Commands");
-                        this.master.output.println("Expected Inputs: Help, Game, Scoreboard");
+                        this.master.output.println("Commands");
+                        this.master.output.println("Expected Inputs: Help, Game, Scoreboard, questions,quit");
                         break;
                     case "game":
-                        this.master.output.println("Choose game Crypto or Networking");
-                        //The available games
-                        this.master.output.println("crypto \n networking");
+
                         //Choosing the which game to play
                         try {
-                        gameChoice = this.master.input.readLine().toLowerCase();
-                        if(gameChoice.equals("crypto")|| gameChoice.equals("networking")){ }
-                        else{                                
-                            this.master.output.println("Unexpected Input Try Again!");
-                            break;    
+                            gameChoice = this.master.input.readLine().toLowerCase();
+                            if (!gameChoice.equals("crypto") && !gameChoice.equals("networking")) {
+                                this.master.output.println("Unexpected Input Try Again!");
+                                break;
+                            }
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
                         //the currentGame is created with the games array at that array
 
                         for (ChallengeResponseGame game : this.games) {
@@ -84,20 +82,17 @@ public class ScoreboardClient implements Runnable {
                             }
                         }
                         //The available Questions
-                        this.master.output.println("Question 1 or Question 2");
                         //Choosing the which question to play
-                       int qChoice=2;
-                    try {
-                        qChoice = Integer.parseInt(this.master.input.readLine());
-                        if(qChoice == 0||qChoice == 1){ 
+                        int qChoice = 2;
+                        try {
+                            qChoice = Integer.parseInt(this.master.input.readLine());
+                            if (qChoice != 0 && qChoice != 1) {
+                                this.master.output.println("Unexpected Input Try Again!");
+                                break;
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
-                        else{                                
-                            this.master.output.println("Unexpected Input Try Again!");
-                            break;    
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
                         //The question is choosen
                         String question;
                         if (currentGame != null) {
@@ -124,29 +119,38 @@ public class ScoreboardClient implements Runnable {
                         for (ChallengeResponseGame game : this.games) {
                             this.master.output.println("retrieving scores for:" + game.gameId);
                             board = game.getScores();
-                        if (board != null) {
-                            for (Map.Entry<String, Integer> entry : board.entrySet()) {
-                                this.master.output.println("Username: " + entry.getKey() + " Score: " + entry.getValue());
+                            if (board != null) {
+                                for (Map.Entry<String, Integer> entry : board.entrySet()) {
+                                    this.master.output.println("Username: " + entry.getKey() + " Score: " + entry.getValue());
+                                }
                             }
                         }
+
+                        break;
+
+                    case "questions":
+                        for (ChallengeResponseGame game : this.games) {
+                            for (int x = 0; x < 2; x++) {
+                                this.master.output.println("From: " + game.getId());
+                                this.master.output.println("Input needed: " + x + " Question: " + game.getQuestions().get(x).getQuestion());
+                            }
                         }
+                        break;
+                    case "quit":
+                        done = true;
+
 
                         break;
-                        
-                        case "question":
-                    for (ChallengeResponseGame game : this.games){
-                        for(int x=0; x<2;x++){
-                        this.master.output.println ("From: "+game.getId());
-                        this.master.output.println("Input needed: "+x+" Question: "+ game.getQuestions().get(x).getQuestion()); 
-                    }
-                }
-                        break;
-
                     default:
                         this.master.output.println("Unexpected Input Try Again!");
                 }
             }
         }
-
+        try {
+            this.master.input.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        this.master.output.close();
     }
 }

@@ -27,7 +27,7 @@ class ScoreboardServer {
         this.games = games;
     }
 
-    public void startServer(int sslPort) {
+    void startServer(int sslPort) {
 
         //Creates a server socket, bound to the specified port.
         SSLServerSocket server = null;
@@ -36,6 +36,7 @@ class ScoreboardServer {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        boolean done = true;
         //listens for activity on the server
         while (true) {
             Socket client = null;
@@ -62,10 +63,10 @@ class ScoreboardServer {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            // WRITE ME: accept connection, extract streams and start thread
+
             ScoreboardClient clientThread = new ScoreboardClient(input, output, games);
             Thread t = new Thread(clientThread);
-            t.start();//memory error
+            t.start();
             // register callback
             clientThread.registerCallback(clientThread);
 
@@ -76,7 +77,7 @@ class ScoreboardServer {
     //setup for the ssl Connection
     //This will use the SSL with keystore and pasword
     //This will be ssl
-    public void setupSSL(String s, String password) {
+    void setupSSL(String s, String password) {
         KeyStore ks = null;
         try {
             ks = KeyStore.getInstance("JKS");
