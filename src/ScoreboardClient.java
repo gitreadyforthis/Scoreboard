@@ -30,9 +30,7 @@ public class ScoreboardClient implements Runnable {
     }
 
     public void run() {
-        //Creates a server socket, bound to the specified port.
-        //should connect to the localhost on port 4001
-        this.master.output.println("User Name Selected");
+
         //Username Declaration
         String userName = null;
         try {
@@ -41,7 +39,6 @@ public class ScoreboardClient implements Runnable {
             e.printStackTrace();
         }
         //Add to array of people
-        this.master.output.println("User Name Selected");
         boolean done = false;
         while (!done) {
             String userInput = null;
