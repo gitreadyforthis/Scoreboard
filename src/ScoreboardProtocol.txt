@@ -1,4 +1,4 @@
-
+Brian Reiskin and Thomas Rhatigan
 
 Server Starts with opening an SSL port Using TLS, Listening for any connections.
 Upon Connection a new thread is created and the user connects to the server through that thread.
