@@ -66,10 +66,15 @@ public class ScoreboardClient implements Runnable {
                         this.master.output.println("crypto \n networking");
                         //Choosing the which game to play
                         try {
-                            gameChoice = this.master.input.readLine().toLowerCase();
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                        gameChoice = this.master.input.readLine().toLowerCase();
+                        if(gameChoice.equals("crypto")|| gameChoice.equals("networking")){ }
+                        else{                                
+                            this.master.output.println("Unexpected Input Try Again!");
+                            break;    
                         }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                         //the currentGame is created with the games array at that array
 
                         for (ChallengeResponseGame game : this.games) {
@@ -81,12 +86,18 @@ public class ScoreboardClient implements Runnable {
                         //The available Questions
                         this.master.output.println("Question 1 or Question 2");
                         //Choosing the which question to play
-                        int qChoice = 0;
-                        try {
-                            qChoice = Integer.parseInt(this.master.input.readLine());
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                       int qChoice=2;
+                    try {
+                        qChoice = Integer.parseInt(this.master.input.readLine());
+                        if(qChoice == 0||qChoice == 1){ 
                         }
+                        else{                                
+                            this.master.output.println("Unexpected Input Try Again!");
+                            break;    
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                         //The question is choosen
                         String question;
                         if (currentGame != null) {
