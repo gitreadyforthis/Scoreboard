@@ -121,6 +121,15 @@ public class ScoreboardClient implements Runnable {
                         }
 
                         break;
+                        
+                        case "question":
+                    for (ChallengeResponseGame game : this.games){
+                        for(int x=0; x<2;x++){
+                        this.master.output.println ("From: "+game.getId());
+                        this.master.output.println("Input needed: "+x+" Question: "+ game.getQuestions().get(x).getQuestion()); 
+                    }
+                }
+                        break;
 
                     default:
                         this.master.output.println("Unexpected Input Try Again!");
