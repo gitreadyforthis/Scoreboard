@@ -9,3 +9,51 @@ server does a sanity check on the users response.
 logs response as right or wrong.
 loops through questions till done.
 gives user their score and all other scores with user attribution.
+
+Server Starts with opening an SSL port Using TLS, Listening for any connections.Upon Connection a new thread is created and the user connects to the server through that thread.The first thing the User needs is to establish a User Name for identification upon the ScoreBoard. After Inputing the User Name the User will have a few options to choose from. 
+
+The commands are: 
+
+Help-which displays the commands that are available to the user
+The syntax is:	help
+
+Game-The user can choose a game to play	
+
+	The default games that come with this package are "crypto" and "networking"
+	After choosing a game then the question is number is excepted which is 0 or 1.
+	This is based on their arraylisting within the program. After choosing a question then 
+	The answer is needed to which the user provides an answer then they are brought back to the main menu
+The syntax is:  game
+		choosen game
+		0 or 1
+		Question appears and user answers question
+		returns to main menu		 
+		
+
+	If you want to add another game to the play you will need to access the code
+	and manually add the games you want to add within the main.
+The syntax to be looked at for: 	ChallengeResponseGame <gameName>= new ChallengeResponseGame("gameName");
+		gameName.addQuestion(new Question("questionNumber","Question","Answer",points));
+
+	
+	You will need to access the code  and increase the  the qchoice value to a value one 
+	more then the total questions that would be avaialabe to each game. The default is 2 
+	questions per game but you wanted to add more then the qChoice value will need to increase.
+The syntax to be looked at for:	int qChoice=2;	if(qChoice == 0||qChoice == 1)
+
+
+ScoreBoard-Will display the scoreboard for the players that have played the games. The scores will be saved with 	the usernames while the server is still running.
+The syntax is:	scoreboard
+		Output of userNames and scoreboards
+		
+
+Questions-Will display all available questions for that are available to the user
+The syntax is:	questions
+		All questions are listed
+
+
+Similar to the qChoice the value of the the games and questions avaiable need to be increased for the addition of 		further games and questions.
+The syntax to be looked at for:	for(int x=0; x<2;x++)
+
+
+Quit-Will disconnect the user from the server and end the thread
